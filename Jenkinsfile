@@ -50,7 +50,7 @@ pipeline {
             branch 'dev'
         }
         steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
             sh """
                 docker login -u $USERNAME -p $PASSWORD
                 docker build -t d0rgham/jenkins-pro:${BUILD_NUMBER} .
@@ -67,7 +67,7 @@ pipeline {
             branch 'release'
         }
         steps {
-            withCredentials([file(credentialsId: 'kubernetes_kubeconfig', variable: 'KUBECONFIG')]) {
+                withCredentials([file(credentialsId: 'kubernetes_kubeconfig', variable: 'KUBECONFIG')]) {
             sh """
                 export BUILD_NUMBER=\$(cat ../jenkins-pro.txt)
                 mv Deployment/deploy.yaml Deployment/deploy.yaml.tmp
